@@ -10,7 +10,6 @@ const datasourceName = "Tableau Embedding - TT Match Tracker Mock";
 const viz = document.getElementById("tableauViz");
 const vizDiv = document.getElementsByClassName("viz-dashboard-div");
 const gamesFilters = document.querySelectorAll('input[type="radio"]');
-const resetBtn = document.getElementsByClassName("reset-btn");
 const getDataBtn = document.getElementsByClassName("get-data-btn")[0];
 const searchWinnerBtn = document.getElementsByClassName("search-winner-btn")[0];
 
@@ -46,6 +45,9 @@ function _initEventListeners() {
   getDataBtn.addEventListener("click", getDatasourceData);
   searchWinnerBtn.addEventListener("click", searchPlayer);
 }
+/**
+ * Creates a list in the html to show the data from the selected dashboard mark
+ */
 async function handleMarkSelection(event) {
   const marksCollection = await event.detail.getMarksAsync();
   const marksData = marksCollection.data[0];
@@ -62,6 +64,9 @@ async function handleMarkSelection(event) {
   }
 }
 
+/**
+ * Combines columns and data into a single record
+ */
 function createRecords(marksData) {
   var columns = marksData.columns;
   var data = marksData.data[0];
@@ -75,6 +80,9 @@ function createRecords(marksData) {
   return output;
 }
 
+/**
+ * Filters the dashboard based on the selected "Game"
+ */
 async function filterGame(radioBtn) {
   if (radioBtn.checked) {
     const label = radioBtn.nextElementSibling.textContent.trim();
@@ -83,6 +91,10 @@ async function filterGame(radioBtn) {
     await sheet.applyFilterAsync("Game", [label], FilterUpdateType.Replace);
   }
 }
+
+/**
+ * Gets data from the viz's datasource and displayes it in a tabulated form
+ */
 async function getDatasourceData() {
   var worksheet = viz.workbook.activeSheet.worksheets[0];
   const dataSources = await worksheet.getDataSourcesAsync();
@@ -97,6 +109,9 @@ async function getDatasourceData() {
   populateVizTable(dataTable.data);
 }
 
+/**
+ * Displayes the data in a tabulated form
+ */
 function populateVizTable(data) {
   var table = document.getElementsByClassName("table viz-table")[0];
   var tbody = table.getElementsByTagName("tbody")[0];
@@ -119,6 +134,9 @@ function populateVizTable(data) {
   }
 }
 
+/**
+ * Highlights and selects a mark (e.g. player) from the dashboard
+ */
 async function searchPlayer() {
   const inputElement = document.getElementById("winnerInput");
   const sheet = viz.workbook.activeSheet.worksheets[3];

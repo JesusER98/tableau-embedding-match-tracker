@@ -30,7 +30,8 @@
 }
 
 .navbar-row-div,
-.viz-row-div {
+.viz-row-div,
+.footer-row-div {
   width: 100% !important;
 }
 .viz-dashboard-div {
@@ -46,4 +47,15 @@
 
 .viz-section {
   text-align: -webkit-center;
+}
+
+.footer-list {
+  list-style: none;
+}
+.footer-link {
+  text-decoration: none;
+  color: white;
+}
+.footer-link:hover {
+  text-decoration: underline;
 }
